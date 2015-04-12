@@ -10,7 +10,7 @@ import com.stevenlr.gameframework.entitysystem.entities.Entity;
 
 public class EntitySystem {
 
-	public static EntitySystem instance;
+	public static EntitySystem instance = new EntitySystem();
 
 	private int _nextId = 1;
 	private Map<Integer, Entity> _entities;
@@ -61,7 +61,7 @@ public class EntitySystem {
 		T component = (T) componentStore.get(entity);
 
 		if (component == null) {
-			throw new RuntimeException("Fetching component from entity that does not poses it");
+			throw new RuntimeException("Fetching component from entity that does not possess it");
 		}
 
 		return component;

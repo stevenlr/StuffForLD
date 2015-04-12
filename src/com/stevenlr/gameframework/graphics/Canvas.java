@@ -1,8 +1,9 @@
 package com.stevenlr.gameframework.graphics;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class Canvas {
+public class Canvas implements IBlittable {
 
 	private int _width;
 	private int _height;
@@ -26,6 +27,11 @@ public class Canvas {
 
 	public Renderer getRenderer() {
 		return _renderer;
+	}
+
+	@Override
+	public void blitOn(Graphics2D graphics) {
+		graphics.drawImage(_image, 0, 0, null);
 	}
 
 	public BufferedImage getImage() {

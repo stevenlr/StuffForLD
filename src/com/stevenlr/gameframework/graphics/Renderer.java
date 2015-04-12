@@ -70,4 +70,9 @@ public class Renderer {
 		_graphics.setColor(color.toAwtColor());
 		_graphics.fillRect(x, y, width, height);
 	}
+
+	public void blit(IBlittable blittable) {
+		applyTransform();
+		blittable.blitOn(_graphics);
+	}
 }

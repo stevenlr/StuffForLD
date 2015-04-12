@@ -82,7 +82,8 @@ public class GameFramework implements Runnable {
 
 	@Override
 	public void run() {
-		long frameTimeExpected = 1000 / 60;
+		long frameTimeExpectedMS = 1000 / 60;
+		float frameTimeExpectedS = frameTimeExpectedMS / 1000.0f;
 		long frameTime;
 		long previousTime = System.currentTimeMillis();
 		long currentTime;
@@ -95,7 +96,16 @@ public class GameFramework implements Runnable {
 			dt = (currentTime - previousTime) / 1000.0f;
 			previousTime = currentTime;
 
-			_game.update(dt);
+			float updateTime = dt;
+			int simulationSteps = 0;
+
+			while (updateTime > frameTimeExpectedS && simulationSteps < 4) {
+				_game.update(frameTimeExpectedS);
+				updateTime -= frameTimeExpectedS;
+				simulationSteps++;
+			}
+
+			_game.update(updateTime);
 			_game.draw(_canvas.getRenderer());
 
 			Graphics graphics = _viewport.getBufferStrategy().getDrawGraphics();
@@ -110,16 +120,16 @@ public class GameFramework implements Runnable {
 				if (_showFps) {
 					System.out.println(frames);
 				}
-				
+
 				frames = 0;
 				time = 0;
 			}
 
 			frameTime = System.currentTimeMillis() - previousTime;
 
-			if (frameTime < frameTimeExpected) {
+			if (frameTime < frameTimeExpectedMS) {
 				try {
-					Thread.sleep(frameTimeExpected - frameTime);
+					Thread.sleep(frameTimeExpectedMS - frameTime);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

@@ -29,6 +29,7 @@ public class TestGame implements Game {
 		GameFramework.instance.setViewportSize(WIDTH * PIXEL_SIZE, HEIGHT * PIXEL_SIZE);
 		GameFramework.instance.setPixelAspect(PIXEL_SIZE);
 		GameFramework.instance.setTitle("lolz lolz bloop lolz");
+		GameFramework.instance.setShowFps(true);
 		GameFramework.instance.startGame(new TestGame());
 	}
 

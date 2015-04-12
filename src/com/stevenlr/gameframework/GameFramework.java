@@ -16,10 +16,11 @@ public class GameFramework implements Runnable {
 	private Canvas _canvas;
 	private java.awt.Canvas _viewport;
 
-	private int _viewportWidth;
-	private int _viewportHeight;
-	private int _pixelAspect;
+	private int _viewportWidth = 800;
+	private int _viewportHeight = 600;
+	private int _pixelAspect = 1;
 	private String _title = "";
+	private boolean _showFps = false;
 
 	private GameFramework() {
 	}
@@ -49,6 +50,14 @@ public class GameFramework implements Runnable {
 		_title = title;
 	}
 
+	public void setShowFps(boolean showFps) {
+		if (_game != null) {
+			throw new RuntimeException("Can't set show fps option after game has started");
+		}
+
+		_showFps = showFps;
+	}
+
 	public void startGame(Game game) {
 		_game = game;
 
@@ -73,9 +82,13 @@ public class GameFramework implements Runnable {
 
 	@Override
 	public void run() {
+		long frameTimeExpected = 1000 / 60;
+		long frameTime;
 		long previousTime = System.currentTimeMillis();
 		long currentTime;
 		float dt;
+		float time = 0;
+		float frames = 0;
 
 		while (true) {
 			currentTime = System.currentTimeMillis();
@@ -90,10 +103,26 @@ public class GameFramework implements Runnable {
 			graphics.dispose();
 			_viewport.getBufferStrategy().show();
 
-			try {
-				Thread.sleep(16);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			frames++;
+			time += dt;
+
+			if (time >= 1) {
+				if (_showFps) {
+					System.out.println(frames);
+				}
+				
+				frames = 0;
+				time = 0;
+			}
+
+			frameTime = System.currentTimeMillis() - previousTime;
+
+			if (frameTime < frameTimeExpected) {
+				try {
+					Thread.sleep(frameTimeExpected - frameTime);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

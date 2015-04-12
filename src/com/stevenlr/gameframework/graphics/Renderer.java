@@ -65,10 +65,10 @@ public class Renderer {
 		}
 	}
 
-	public void fillRect(int x, int y, int width, int height, Color color) {
+	public void fillRect(float x, float y, float width, float height, Color color) {
 		applyTransform();
 		_graphics.setColor(color.toAwtColor());
-		_graphics.fillRect(x, y, width, height);
+		_graphics.fillRect((int) x, (int) y, (int) width, (int) height);
 	}
 
 	public void blit(IBlittable blittable) {

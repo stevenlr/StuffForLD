@@ -1,16 +1,24 @@
 package com.stevenlr.gameframework;
 
-import com.stevenlr.gameframework.graphics.Renderer;
+import java.awt.Dimension;
+import java.awt.Graphics;
+
+import javax.swing.JFrame;
+
+import com.stevenlr.gameframework.graphics.Canvas;
 
 public class GameFramework implements Runnable {
 
 	public static GameFramework instance = new GameFramework();
 	
 	private static Game _game;
-	private Renderer _renderer;
+	private Canvas _canvas;
+	private java.awt.Canvas _viewport;
+
 	private int _viewportWidth;
 	private int _viewportHeight;
 	private int _pixelAspect;
+	private String _title = "";
 
 	private GameFramework() {
 	}
@@ -32,15 +40,52 @@ public class GameFramework implements Runnable {
 		_pixelAspect = pixelAspect;
 	}
 
+	public void setTitle(String title) {
+		if (_game != null) {
+			throw new RuntimeException("Can't set title after game has started");
+		}
+
+		_title = title;
+	}
+
 	public void startGame(Game game) {
 		_game = game;
+
+		_canvas = new Canvas(_viewportWidth / _pixelAspect, _viewportHeight / _viewportHeight);
+
+		JFrame frame = new JFrame(_title);
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		_viewport = new java.awt.Canvas();
+		_viewport.setPreferredSize(new Dimension(_viewportWidth, _viewportHeight));
+
+		frame.add(_viewport);
+		frame.pack();
+		frame.setVisible(true);
+
+		_viewport.createBufferStrategy(2);
+
 		game.init();
 		new Thread(this).start();
 	}
 
 	@Override
 	public void run() {
-		_game.update(1.0f);
-		_game.draw(_renderer);
+		while (true) {
+			_game.update(1.0f);
+			_game.draw(_canvas.getRenderer());
+
+			Graphics graphics = _viewport.getBufferStrategy().getDrawGraphics();
+			graphics.drawImage(_canvas.getImage(), 0, 0, _viewportWidth, _viewportHeight, null);
+			graphics.dispose();
+			_viewport.getBufferStrategy().show();
+
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

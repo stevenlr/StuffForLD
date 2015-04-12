@@ -72,8 +72,16 @@ public class GameFramework implements Runnable {
 
 	@Override
 	public void run() {
+		long previousTime = System.currentTimeMillis();
+		long currentTime;
+		float dt;
+
 		while (true) {
-			_game.update(1.0f);
+			currentTime = System.currentTimeMillis();
+			dt = (currentTime - previousTime) / 1000.0f;
+			previousTime = currentTime;
+
+			_game.update(dt);
 			_game.draw(_canvas.getRenderer());
 
 			Graphics graphics = _viewport.getBufferStrategy().getDrawGraphics();
@@ -82,7 +90,7 @@ public class GameFramework implements Runnable {
 			_viewport.getBufferStrategy().show();
 
 			try {
-				Thread.sleep(10);
+				Thread.sleep(16);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

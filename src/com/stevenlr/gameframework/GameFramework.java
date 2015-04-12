@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import com.stevenlr.gameframework.graphics.Canvas;
 
@@ -51,11 +52,11 @@ public class GameFramework implements Runnable {
 	public void startGame(Game game) {
 		_game = game;
 
-		_canvas = new Canvas(_viewportWidth / _pixelAspect, _viewportHeight / _viewportHeight);
+		_canvas = new Canvas(_viewportWidth / _pixelAspect, _viewportHeight / _pixelAspect);
 
 		JFrame frame = new JFrame(_title);
 		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		_viewport = new java.awt.Canvas();
 		_viewport.setPreferredSize(new Dimension(_viewportWidth, _viewportHeight));

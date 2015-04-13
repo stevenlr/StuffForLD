@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Waffle" default="dist" basedir=".">
+	<property name="src" value="src" />
+	<property name="build" value="build" />
+	<property name="dist" value="dist" />
+	<property name="jarfile" value="Waffle.jar" />
+
+	<target name="init">
+		<mkdir dir="${build}" />
+	</target>
+
+	<target name="build" depends="init">
+		<javac srcdir="${src}" destdir="${build}" includes="com/stevenlr/waffle/**" />
+	</target>
+
+	<target name="dist" depends="build">
+		<mkdir dir="${dist}" />
+		<jar jarfile="${dist}/${jarfile}" basedir="${build}" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${build}" />
+	</target>
+</project>

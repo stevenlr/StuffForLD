@@ -89,7 +89,7 @@ public class EntitySystem {
 
 			for (Entity entity : entities) {
 				if (!componentStore.containsKey(entity)) {
-					entities.remove(entity);
+					entities.remove(entity); // TODO concurrent stuff
 				}
 			}
 		}

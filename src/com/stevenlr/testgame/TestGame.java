@@ -1,11 +1,9 @@
 package com.stevenlr.testgame;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import com.stevenlr.gameframework.Game;
 import com.stevenlr.gameframework.GameFramework;
-import com.stevenlr.gameframework.entitysystem.EntitySystem;
 import com.stevenlr.gameframework.graphics.Color;
 import com.stevenlr.gameframework.graphics.Renderer;
 import com.stevenlr.gameframework.graphics.Sprite;

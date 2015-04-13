@@ -1,5 +1,6 @@
 package com.stevenlr.gameframework;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -7,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import com.stevenlr.gameframework.graphics.Canvas;
+import com.stevenlr.gameframework.input.InputHandler;
 
 public class GameFramework implements Runnable {
 
@@ -76,6 +78,9 @@ public class GameFramework implements Runnable {
 
 		_viewport.createBufferStrategy(2);
 
+		InputHandler.registerHandlers( _viewport);
+		frame.requestFocus();
+
 		game.init();
 		new Thread(this).start();
 	}
@@ -99,13 +104,15 @@ public class GameFramework implements Runnable {
 			float updateTime = dt;
 			int simulationSteps = 0;
 
-			while (updateTime > frameTimeExpectedS && simulationSteps < 4) {
-				_game.update(frameTimeExpectedS);
-				updateTime -= frameTimeExpectedS;
+			while (updateTime > 0.0000001 && simulationSteps < 4) {
+				float stepDt = Math.min(updateTime, frameTimeExpectedS);
+
+				_game.update(stepDt);
+				updateTime -= stepDt;
 				simulationSteps++;
+				InputHandler.keyboard.clean();
 			}
 
-			_game.update(updateTime);
 			_game.draw(_canvas.getRenderer());
 
 			Graphics graphics = _viewport.getBufferStrategy().getDrawGraphics();

@@ -1,5 +1,8 @@
 package com.stevenlr.testgame;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import com.stevenlr.gameframework.Game;
 import com.stevenlr.gameframework.GameFramework;
 import com.stevenlr.gameframework.entitysystem.EntitySystem;
@@ -7,6 +10,7 @@ import com.stevenlr.gameframework.graphics.Color;
 import com.stevenlr.gameframework.graphics.Renderer;
 import com.stevenlr.gameframework.graphics.Sprite;
 import com.stevenlr.gameframework.graphics.SpriteSheet;
+import com.stevenlr.gameframework.input.InputHandler;
 import com.stevenlr.testgame.entities.TestEntity;
 import com.stevenlr.testgame.systems.ColorPointRenderSystem;
 import com.stevenlr.testgame.systems.MovementSystem;
@@ -52,7 +56,10 @@ public class TestGame implements Game {
 	@Override
 	public void update(float dt) {
 		_time += dt;
-		_movementSystem.update(dt);
+
+		if (InputHandler.keyboard.isDown(KeyEvent.VK_A)) {
+			_movementSystem.update(dt);
+		}
 	}
 
 	@Override

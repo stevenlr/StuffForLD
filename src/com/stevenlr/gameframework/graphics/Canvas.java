@@ -2,6 +2,7 @@ package com.stevenlr.gameframework.graphics;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 public class Canvas implements IBlittable {
 
@@ -14,7 +15,11 @@ public class Canvas implements IBlittable {
 		_width = width;
 		_height = height;
 		_image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		_renderer = new Renderer(_image.createGraphics());
+		_renderer = new Renderer(_image.createGraphics(), getRaster());
+	}
+
+	public int[] getRaster() {
+		return ((DataBufferInt) _image.getRaster().getDataBuffer()).getData();
 	}
 
 	public int getWidth() {

@@ -11,10 +11,16 @@ public class Renderer {
 	private AffineTransform _transform;
 	private Deque<AffineTransform> _transformStack = new LinkedList<AffineTransform>();
 	private boolean _isDirty = true;
+	private int[] _raster;
 
-	public Renderer(Graphics2D graphics) {
+	public Renderer(Graphics2D graphics, int[] raster) {
 		_graphics = graphics;
 		_transform = _graphics.getTransform();
+		_raster = raster;
+	}
+
+	public int[] getRaster() {
+		return _raster;
 	}
 
 	public void save() {

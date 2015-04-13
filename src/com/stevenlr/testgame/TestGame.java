@@ -100,5 +100,7 @@ public class TestGame implements Game {
 		r.translate(WIDTH / 2, HEIGHT / 2);
 		_renderSystem.draw(r);
 		r.restore();
+
+		r.getRaster()[1] = 0xffff00ff;
 	}
 }

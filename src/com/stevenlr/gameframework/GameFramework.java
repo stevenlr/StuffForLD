@@ -21,7 +21,7 @@ public class GameFramework implements Runnable {
 	public static EntitySystem entitySystem = EntitySystem.instance;
 	public static SoundsManager sounds = SoundsManager.instance;
 
-	private static Game _game;
+	private static IGame _game;
 	private Canvas _canvas;
 	private java.awt.Canvas _viewport;
 
@@ -67,7 +67,7 @@ public class GameFramework implements Runnable {
 		_showFps = showFps;
 	}
 
-	public void startGame(Game game) {
+	public void startGame(IGame game) {
 		_game = game;
 
 		_canvas = new Canvas(_viewportWidth / _pixelAspect, _viewportHeight / _pixelAspect);

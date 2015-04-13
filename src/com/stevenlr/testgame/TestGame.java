@@ -2,7 +2,7 @@ package com.stevenlr.testgame;
 
 import java.awt.event.KeyEvent;
 
-import com.stevenlr.gameframework.Game;
+import com.stevenlr.gameframework.IGame;
 import com.stevenlr.gameframework.GameFramework;
 import com.stevenlr.gameframework.graphics.Color;
 import com.stevenlr.gameframework.graphics.Renderer;
@@ -14,7 +14,7 @@ import com.stevenlr.testgame.entities.TestEntity;
 import com.stevenlr.testgame.systems.ColorPointRenderSystem;
 import com.stevenlr.testgame.systems.MovementSystem;
 
-public class TestGame implements Game {
+public class TestGame implements IGame {
 
 	public static final int WIDTH = 400;
 	public static final int HEIGHT = 300;

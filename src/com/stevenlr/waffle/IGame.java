@@ -1,6 +1,6 @@
-package com.stevenlr.gameframework;
+package com.stevenlr.waffle;
 
-import com.stevenlr.gameframework.graphics.Renderer;
+import com.stevenlr.waffle.graphics.Renderer;
 
 public interface IGame {
 

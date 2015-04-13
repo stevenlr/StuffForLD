@@ -1,4 +1,4 @@
-package com.stevenlr.gameframework;
+package com.stevenlr.waffle;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -6,12 +6,12 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import com.stevenlr.gameframework.entitysystem.EntitySystem;
-import com.stevenlr.gameframework.graphics.Canvas;
-import com.stevenlr.gameframework.input.InputHandler;
-import com.stevenlr.gameframework.input.KeyboardInputHandler;
-import com.stevenlr.gameframework.input.MouseInputHandler;
-import com.stevenlr.gameframework.sounds.SoundsManager;
+import com.stevenlr.waffle.entitysystem.EntitySystem;
+import com.stevenlr.waffle.graphics.Canvas;
+import com.stevenlr.waffle.input.InputHandler;
+import com.stevenlr.waffle.input.KeyboardInputHandler;
+import com.stevenlr.waffle.input.MouseInputHandler;
+import com.stevenlr.waffle.sounds.SoundsManager;
 
 public class GameFramework implements Runnable {
 

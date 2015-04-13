@@ -1,12 +1,12 @@
-package com.stevenlr.gameframework.entitysystem;
+package com.stevenlr.waffle.entitysystem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.stevenlr.gameframework.entitysystem.components.Component;
-import com.stevenlr.gameframework.entitysystem.entities.Entity;
+import com.stevenlr.waffle.entitysystem.components.Component;
+import com.stevenlr.waffle.entitysystem.entities.Entity;
 
 public class EntitySystem {
 

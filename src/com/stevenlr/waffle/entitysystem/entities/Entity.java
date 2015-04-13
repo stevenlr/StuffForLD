@@ -1,10 +1,10 @@
-package com.stevenlr.gameframework.entitysystem.entities;
+package com.stevenlr.waffle.entitysystem.entities;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.stevenlr.gameframework.entitysystem.EntitySystem;
-import com.stevenlr.gameframework.entitysystem.components.Component;
+import com.stevenlr.waffle.entitysystem.EntitySystem;
+import com.stevenlr.waffle.entitysystem.components.Component;
 
 public abstract class Entity {
 

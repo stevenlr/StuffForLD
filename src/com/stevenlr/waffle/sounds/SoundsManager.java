@@ -1,4 +1,4 @@
-package com.stevenlr.gameframework.sounds;
+package com.stevenlr.waffle.sounds;
 
 import java.util.HashMap;
 import java.util.Map;

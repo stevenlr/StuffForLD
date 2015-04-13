@@ -1,4 +1,4 @@
-package com.stevenlr.gameframework.graphics;
+package com.stevenlr.waffle.graphics;
 
 public class Color {
 

@@ -1,4 +1,4 @@
-package com.stevenlr.gameframework.input;
+package com.stevenlr.waffle.input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

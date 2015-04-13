@@ -1,4 +1,4 @@
-package com.stevenlr.gameframework.sounds;
+package com.stevenlr.waffle.sounds;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import com.stevenlr.gameframework.GameFramework;
+import com.stevenlr.waffle.GameFramework;
 
 public class Sound implements LineListener {
 

@@ -13,7 +13,7 @@ import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import com.stevenlr.waffle.GameFramework;
+import com.stevenlr.waffle.Waffle;
 
 public class Sound implements LineListener {
 
@@ -23,7 +23,7 @@ public class Sound implements LineListener {
 
 	public Sound(String filename, float gain) {
 		try {
-			AudioInputStream stream = AudioSystem.getAudioInputStream(GameFramework.class.getResourceAsStream(filename));
+			AudioInputStream stream = AudioSystem.getAudioInputStream(Waffle.class.getResourceAsStream(filename));
 
 			_format = stream.getFormat();
 			_buffer = new byte[stream.available()];

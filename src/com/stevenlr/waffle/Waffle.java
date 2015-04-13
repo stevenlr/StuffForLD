@@ -13,9 +13,9 @@ import com.stevenlr.waffle.input.KeyboardInputHandler;
 import com.stevenlr.waffle.input.MouseInputHandler;
 import com.stevenlr.waffle.sounds.SoundsManager;
 
-public class GameFramework implements Runnable {
+public class Waffle implements Runnable {
 
-	public static GameFramework instance = new GameFramework();
+	public static Waffle instance = new Waffle();
 	public static KeyboardInputHandler keyboard = InputHandler.keyboard;
 	public static MouseInputHandler mouse = InputHandler.mouse;
 	public static EntitySystem entitySystem = EntitySystem.instance;
@@ -31,7 +31,7 @@ public class GameFramework implements Runnable {
 	private String _title = "";
 	private boolean _showFps = false;
 
-	private GameFramework() {
+	private Waffle() {
 	}
 
 	public void setViewportSize(int width, int height) {

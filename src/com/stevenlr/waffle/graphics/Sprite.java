@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.stevenlr.waffle.GameFramework;
+import com.stevenlr.waffle.Waffle;
 
 public class Sprite implements IBlittable {
 
@@ -14,7 +14,7 @@ public class Sprite implements IBlittable {
 
 	public Sprite(String filename) {
 		try {
-			_image = ImageIO.read(GameFramework.class.getResourceAsStream(filename));
+			_image = ImageIO.read(Waffle.class.getResourceAsStream(filename));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

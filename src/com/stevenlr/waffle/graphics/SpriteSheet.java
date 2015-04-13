@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.stevenlr.waffle.GameFramework;
+import com.stevenlr.waffle.Waffle;
 
 public class SpriteSheet {
 
@@ -18,7 +18,7 @@ public class SpriteSheet {
 
 	public SpriteSheet(String filename, int tileWidth, int tileHeight) {
 		try {
-			_image = ImageIO.read(GameFramework.class.getResourceAsStream(filename));
+			_image = ImageIO.read(Waffle.class.getResourceAsStream(filename));
 			_tileWidth = tileWidth;
 			_tileHeight = tileHeight;
 			_numTilesX = _image.getWidth() / _tileWidth;

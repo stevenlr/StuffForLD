@@ -9,6 +9,9 @@ public class SoundsManager {
 
 	private Map<String, Sound> _sounds = new HashMap<String, Sound>();
 
+	private SoundsManager() {
+	}
+
 	public void addSound(String name, Sound sound) {
 		_sounds.put(name, sound);
 	}

@@ -8,13 +8,11 @@ import com.stevenlr.gameframework.graphics.Color;
 import com.stevenlr.gameframework.graphics.Renderer;
 import com.stevenlr.gameframework.graphics.Sprite;
 import com.stevenlr.gameframework.graphics.SpriteSheet;
-import com.stevenlr.gameframework.input.InputHandler;
 import com.stevenlr.gameframework.sounds.Sound;
-import com.stevenlr.gameframework.sounds.SoundsManager;
+
 import com.stevenlr.testgame.entities.TestEntity;
 import com.stevenlr.testgame.systems.ColorPointRenderSystem;
 import com.stevenlr.testgame.systems.MovementSystem;
-import jdk.internal.util.xml.impl.Input;
 
 public class TestGame implements Game {
 
@@ -24,7 +22,6 @@ public class TestGame implements Game {
 
 	private float _time = 0;
 	private Sprite _image;
-	private SpriteSheet _sprites;
 	private SpriteSheet.Region[] _regions = new SpriteSheet.Region[4];
 	private SpriteSheet.Region _region2;
 	private MovementSystem _movementSystem = new MovementSystem(40f);
@@ -37,20 +34,21 @@ public class TestGame implements Game {
 		GameFramework.instance.setShowFps(true);
 		GameFramework.instance.startGame(new TestGame());
 
-		SoundsManager.instance.addSound("s1", new Sound("/s1.wav", 0.1f));
-		SoundsManager.instance.addSound("s2", new Sound("/s2.wav"));
+		GameFramework.sounds.addSound("s1", new Sound("/s1.wav", 0.1f));
+		GameFramework.sounds.addSound("s2", new Sound("/s2.wav"));
 	}
 
 	@Override
 	public void init() {
+		SpriteSheet sprites = new SpriteSheet("/spritesheet.png", 16, 16);
+		
 		_image = new Sprite("/image.png");
-		_sprites = new SpriteSheet("/spritesheet.png", 16, 16);
 
 		for (int i = 0; i < 4; ++i) {
-			_regions[i] = _sprites.getRegion(i);
+			_regions[i] = sprites.getRegion(i);
 		}
 
-		_region2 = _sprites.getRegion(0, 1, 2, 1);
+		_region2 = sprites.getRegion(0, 1, 2, 1);
 
 		for (int i = 0; i < 1000; ++i) {
 			new TestEntity();
@@ -61,16 +59,16 @@ public class TestGame implements Game {
 	public void update(float dt) {
 		_time += dt;
 
-		if (InputHandler.keyboard.isDown(KeyEvent.VK_A)) {
+		if (GameFramework.keyboard.isDown(KeyEvent.VK_A)) {
 			_movementSystem.update(dt);
 		}
 
-		if (InputHandler.keyboard.isPressedThisFrame(KeyEvent.VK_Z)) {
-			SoundsManager.instance.play("s1");
+		if (GameFramework.keyboard.isPressedThisFrame(KeyEvent.VK_Z)) {
+			GameFramework.sounds.play("s1");
 		}
 
-		if (InputHandler.keyboard.isPressedThisFrame(KeyEvent.VK_E)) {
-			SoundsManager.instance.play("s2");
+		if (GameFramework.keyboard.isPressedThisFrame(KeyEvent.VK_E)) {
+			GameFramework.sounds.play("s2");
 		}
 	}
 

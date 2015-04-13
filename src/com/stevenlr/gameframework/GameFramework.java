@@ -6,13 +6,20 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import com.stevenlr.gameframework.entitysystem.EntitySystem;
 import com.stevenlr.gameframework.graphics.Canvas;
 import com.stevenlr.gameframework.input.InputHandler;
-import jdk.internal.util.xml.impl.Input;
+import com.stevenlr.gameframework.input.KeyboardInputHandler;
+import com.stevenlr.gameframework.input.MouseInputHandler;
+import com.stevenlr.gameframework.sounds.SoundsManager;
 
 public class GameFramework implements Runnable {
 
 	public static GameFramework instance = new GameFramework();
+	public static KeyboardInputHandler keyboard = InputHandler.keyboard;
+	public static MouseInputHandler mouse = InputHandler.mouse;
+	public static EntitySystem entitySystem = EntitySystem.instance;
+	public static SoundsManager sounds = SoundsManager.instance;
 
 	private static Game _game;
 	private Canvas _canvas;

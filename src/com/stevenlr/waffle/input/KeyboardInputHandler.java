@@ -18,13 +18,17 @@ public class KeyboardInputHandler implements KeyListener {
 		private boolean _isDown = false;
 
 		public void press() {
-			_pressedThisFrame = true;
-			_isDown = true;
+			if (!_isDown) {
+				_pressedThisFrame = true;
+				_isDown = true;
+			}
 		}
 
 		public void release() {
-			_releasedThisFrame = true;
-			_isDown = false;
+			if (_isDown) {
+				_releasedThisFrame = true;
+				_isDown = false;
+			}
 		}
 
 		public void clean() {

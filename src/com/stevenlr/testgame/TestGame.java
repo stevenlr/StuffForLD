@@ -9,9 +9,12 @@ import com.stevenlr.gameframework.graphics.Renderer;
 import com.stevenlr.gameframework.graphics.Sprite;
 import com.stevenlr.gameframework.graphics.SpriteSheet;
 import com.stevenlr.gameframework.input.InputHandler;
+import com.stevenlr.gameframework.sounds.Sound;
+import com.stevenlr.gameframework.sounds.SoundsManager;
 import com.stevenlr.testgame.entities.TestEntity;
 import com.stevenlr.testgame.systems.ColorPointRenderSystem;
 import com.stevenlr.testgame.systems.MovementSystem;
+import jdk.internal.util.xml.impl.Input;
 
 public class TestGame implements Game {
 
@@ -33,6 +36,9 @@ public class TestGame implements Game {
 		GameFramework.instance.setTitle("lolz lolz bloop lolz");
 		GameFramework.instance.setShowFps(true);
 		GameFramework.instance.startGame(new TestGame());
+
+		SoundsManager.instance.addSound("s1", new Sound("/s1.wav", 0.1f));
+		SoundsManager.instance.addSound("s2", new Sound("/s2.wav"));
 	}
 
 	@Override
@@ -57,6 +63,14 @@ public class TestGame implements Game {
 
 		if (InputHandler.keyboard.isDown(KeyEvent.VK_A)) {
 			_movementSystem.update(dt);
+		}
+
+		if (InputHandler.keyboard.isPressedThisFrame(KeyEvent.VK_Z)) {
+			SoundsManager.instance.play("s1");
+		}
+
+		if (InputHandler.keyboard.isPressedThisFrame(KeyEvent.VK_E)) {
+			SoundsManager.instance.play("s2");
 		}
 	}
 

@@ -87,9 +87,10 @@ public class EntitySystem {
 		for (Class<? extends Component> componentType : componentTypes) {
 			Map<Entity, Component> componentStore = _components.get(componentType);
 
-			for (Entity entity : entities) {
-				if (!componentStore.containsKey(entity)) {
-					entities.remove(entity); // TODO concurrent stuff
+			for (int i = 0; i < entities.size(); ++i) {
+				if (!componentStore.containsKey(entities.get(i))) {
+					entities.remove(entities.get(i));
+					--i;
 				}
 			}
 		}

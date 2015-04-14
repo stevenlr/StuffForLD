@@ -27,10 +27,12 @@ public class Canvas implements IBlittable {
 		return ((DataBufferInt) _image.getRaster().getDataBuffer()).getData();
 	}
 
+	@Override
 	public int getWidth() {
 		return _width;
 	}
 
+	@Override
 	public int getHeight() {
 		return _height;
 	}
@@ -40,8 +42,8 @@ public class Canvas implements IBlittable {
 	}
 
 	@Override
-	public void blitOn(Graphics2D graphics) {
-		graphics.drawImage(_image, 0, 0, null);
+	public void blitOn(Graphics2D graphics, int x, int y, int width, int height) {
+		graphics.drawImage(_image, x, y, width, height, null);
 	}
 
 	public BufferedImage getImage() {

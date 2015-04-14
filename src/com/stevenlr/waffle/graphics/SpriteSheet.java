@@ -50,14 +50,24 @@ public class SpriteSheet {
 		}
 
 		@Override
-		public void blitOn(Graphics2D graphics) {
+		public void blitOn(Graphics2D graphics, int x, int y, int width, int height) {
 			graphics.drawImage(_spritesheet._image,
-					0, 0,
-					_width, _height,
+					x, y,
+					width, height,
 					_x, _y,
 					_x + _width, _y + _height,
 					null
 			);
+		}
+
+		@Override
+		public int getWidth() {
+			return _width;
+		}
+
+		@Override
+		public int getHeight() {
+			return _height;
 		}
 	}
 

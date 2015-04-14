@@ -83,7 +83,44 @@ public class Renderer {
 	}
 
 	public void blit(IBlittable blittable) {
+		blit(blittable, 0, 0, blittable.getWidth(), blittable.getHeight());
+	}
+
+	public void blit(IBlittable blittable, float scale) {
+		blit(blittable, 0, 0, (int) (blittable.getWidth() * scale), (int) (blittable.getHeight() * scale));
+	}
+
+	public void blit(IBlittable blittable, int x, int y) {
+		blit(blittable, x, y, blittable.getWidth(), blittable.getHeight());
+	}
+
+	public void blit(IBlittable blittable, int x, int y, float scale) {
+		blit(blittable, x, y, (int) (blittable.getWidth() * scale), (int) (blittable.getHeight() * scale));
+	}
+
+	public void blit(IBlittable blittable, int x, int y, int width, int height) {
 		applyTransform();
-		blittable.blitOn(_graphics);
+		blittable.blitOn(_graphics, x, y, width, height);
+	}
+
+	public void blitCenter(IBlittable blittable) {
+		blitCenter(blittable, 0, 0, blittable.getWidth(), blittable.getHeight());
+	}
+
+	public void blitCenter(IBlittable blittable, float scale) {
+		blitCenter(blittable, 0, 0, (int) (blittable.getWidth() * scale), (int) (blittable.getHeight() * scale));
+	}
+
+	public void blitCenter(IBlittable blittable, int x, int y) {
+		blitCenter(blittable, x, y, blittable.getWidth(), blittable.getHeight());
+	}
+
+	public void blitCenter(IBlittable blittable, int x, int y, float scale) {
+		blitCenter(blittable, x, y, (int) (blittable.getWidth() * scale), (int) (blittable.getHeight() * scale));
+	}
+
+	public void blitCenter(IBlittable blittable, int x, int y, int width, int height) {
+		applyTransform();
+		blittable.blitOn(_graphics, x - width / 2, y - height / 2, width, height);
 	}
 }

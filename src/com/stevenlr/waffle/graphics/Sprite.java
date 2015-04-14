@@ -25,16 +25,18 @@ public class Sprite implements IBlittable {
 		}
 	}
 
+	@Override
 	public int getWidth() {
 		return _image.getWidth();
 	}
 
+	@Override
 	public int getHeight() {
 		return _image.getHeight();
 	}
 
 	@Override
-	public void blitOn(Graphics2D graphics) {
-		graphics.drawImage(_image, 0, 0, null);
+	public void blitOn(Graphics2D graphics, int x, int y, int width, int height) {
+		graphics.drawImage(_image, x, y, width, height, null);
 	}
 }

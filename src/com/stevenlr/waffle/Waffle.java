@@ -99,7 +99,7 @@ public class Waffle implements Runnable {
 
 	@Override
 	public void run() {
-		long frameTimeExpectedMS = 1000 / 60;
+		float frameTimeExpectedMS = 1000.0f / 60;
 		float frameTimeExpectedS = frameTimeExpectedMS / 1000.0f;
 		long frameTime;
 		long previousTime = System.currentTimeMillis();
@@ -148,7 +148,7 @@ public class Waffle implements Runnable {
 
 			if (frameTime < frameTimeExpectedMS) {
 				try {
-					Thread.sleep(frameTimeExpectedMS - frameTime);
+					Thread.sleep((long) (frameTimeExpectedMS - frameTime));
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

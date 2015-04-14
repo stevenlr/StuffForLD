@@ -9,6 +9,7 @@ import java.awt.BasicStroke;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -165,5 +166,24 @@ public class Renderer {
 		}
 
 		_graphics.drawString(text, x, y);
+	}
+
+	public Point2D toScreenSpace(Point2D src) {
+		float[] dest = new float[2];
+		_transform.transform(new float[]{src.x, src.y}, 0, dest, 0, 1);
+
+		return new Point2D(dest[0], dest[1]);
+	}
+
+	public Point2D toWorldSpace(Point2D src) {
+		double[] dest = new double[2];
+
+		try {
+			_transform.inverseTransform(new double[]{src.x, src.y}, 0, dest, 0, 1);
+		} catch (NoninvertibleTransformException e) {
+			e.printStackTrace();
+		}
+
+		return new Point2D((float) dest[0], (float) dest[1]);
 	}
 }

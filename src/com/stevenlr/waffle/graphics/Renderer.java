@@ -5,6 +5,7 @@
 
 package com.stevenlr.waffle.graphics;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.Deque;
@@ -80,6 +81,13 @@ public class Renderer {
 		applyTransform();
 		_graphics.setColor(color.toAwtColor());
 		_graphics.fillRect((int) x, (int) y, (int) width, (int) height);
+	}
+
+	public void drawLine(float x1, float y1, float x2, float y2, float thickness, Color color) {
+		applyTransform();
+		_graphics.setColor(color.toAwtColor());
+		_graphics.setStroke(new BasicStroke(thickness));
+		_graphics.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
 	}
 
 	public void blit(IBlittable blittable) {

@@ -6,6 +6,7 @@
 package com.stevenlr.waffle.graphics;
 
 import java.awt.BasicStroke;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.Deque;
@@ -98,17 +99,17 @@ public class Renderer {
 		blit(blittable, 0, 0, (int) (blittable.getWidth() * scale), (int) (blittable.getHeight() * scale));
 	}
 
-	public void blit(IBlittable blittable, int x, int y) {
+	public void blit(IBlittable blittable, float x, float y) {
 		blit(blittable, x, y, blittable.getWidth(), blittable.getHeight());
 	}
 
-	public void blit(IBlittable blittable, int x, int y, float scale) {
+	public void blit(IBlittable blittable, float x, float y, float scale) {
 		blit(blittable, x, y, (int) (blittable.getWidth() * scale), (int) (blittable.getHeight() * scale));
 	}
 
-	public void blit(IBlittable blittable, int x, int y, int width, int height) {
+	public void blit(IBlittable blittable, float x, float y, float width, float height) {
 		applyTransform();
-		blittable.blitOn(_graphics, x, y, width, height);
+		blittable.blitOn(_graphics, (int) x, (int) y, (int) width, (int) height);
 	}
 
 	public void blitCenter(IBlittable blittable) {
@@ -119,16 +120,50 @@ public class Renderer {
 		blitCenter(blittable, 0, 0, (int) (blittable.getWidth() * scale), (int) (blittable.getHeight() * scale));
 	}
 
-	public void blitCenter(IBlittable blittable, int x, int y) {
+	public void blitCenter(IBlittable blittable, float x, float y) {
 		blitCenter(blittable, x, y, blittable.getWidth(), blittable.getHeight());
 	}
 
-	public void blitCenter(IBlittable blittable, int x, int y, float scale) {
+	public void blitCenter(IBlittable blittable, float x, float y, float scale) {
 		blitCenter(blittable, x, y, (int) (blittable.getWidth() * scale), (int) (blittable.getHeight() * scale));
 	}
 
-	public void blitCenter(IBlittable blittable, int x, int y, int width, int height) {
+	public void blitCenter(IBlittable blittable, float x, float y, float width, float height) {
 		applyTransform();
-		blittable.blitOn(_graphics, x - width / 2, y - height / 2, width, height);
+		blittable.blitOn(_graphics, (int) (x - width / 2), (int) (y - height / 2), (int) width, (int) height);
+	}
+
+	public void drawText(String text, Color color, Font font, float x, float y) {
+		drawText(text, color, font, x, y, Font.HorizontalAlign.LEFT, Font.VerticalAlign.BOTTOM);
+	}
+
+	public void drawText(String text, Color color, Font font, float x, float y, Font.HorizontalAlign horizontalAlign, Font.VerticalAlign verticalAlign) {
+		applyTransform();
+		_graphics.setColor(color.toAwtColor());
+		_graphics.setFont(font.toAwtFont());
+
+		FontMetrics metrics = _graphics.getFontMetrics();
+		float width = metrics.stringWidth(text);
+		float height = metrics.getHeight();
+
+		switch (horizontalAlign) {
+		case RIGHT:
+			x -= width;
+			break;
+		case MIDDLE:
+			x -= width / 2;
+			break;
+		}
+
+		switch (verticalAlign) {
+		case TOP:
+			y += height;
+			break;
+		case MIDDLE:
+			y += height / 2;
+			break;
+		}
+
+		_graphics.drawString(text, x, y);
 	}
 }

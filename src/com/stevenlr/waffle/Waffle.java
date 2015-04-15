@@ -16,7 +16,6 @@ import com.stevenlr.waffle.graphics.Canvas;
 import com.stevenlr.waffle.input.InputHandler;
 import com.stevenlr.waffle.input.KeyboardInputHandler;
 import com.stevenlr.waffle.input.MouseInputHandler;
-import com.stevenlr.waffle.sounds.SoundsManager;
 
 public class Waffle implements Runnable {
 
@@ -24,7 +23,6 @@ public class Waffle implements Runnable {
 	public static KeyboardInputHandler keyboard = InputHandler.keyboard;
 	public static MouseInputHandler mouse = InputHandler.mouse;
 	public static EntitySystem entitySystem = EntitySystem.instance;
-	public static SoundsManager sounds = SoundsManager.instance;
 
 	private static IWaffleGame _game;
 	private Canvas _canvas;

@@ -5,6 +5,7 @@
 
 package com.stevenlr.waffle.sounds;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
@@ -28,7 +29,8 @@ public class Sound implements LineListener {
 
 	public Sound(String filename, float gain) {
 		try {
-			AudioInputStream stream = AudioSystem.getAudioInputStream(Waffle.class.getResourceAsStream(filename));
+			BufferedInputStream fileStream = new BufferedInputStream(Waffle.class.getResourceAsStream(filename));
+			AudioInputStream stream = AudioSystem.getAudioInputStream(fileStream);
 
 			_format = stream.getFormat();
 			_buffer = new byte[stream.available()];

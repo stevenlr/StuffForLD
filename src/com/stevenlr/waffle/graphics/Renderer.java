@@ -5,11 +5,18 @@
 
 package com.stevenlr.waffle.graphics;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
+import java.awt.Composite;
+import java.awt.CompositeContext;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
+import java.awt.image.ColorModel;
+import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -159,6 +166,94 @@ public class Renderer {
 		_blitter.begin(blittable, x, y, width, height);
 
 		return _blitter;
+	}
+
+	private static class CustomComposite implements Composite, CompositeContext {
+
+		public static CustomComposite instance = new CustomComposite();
+
+		private boolean _additive;
+		private Color _color;
+		private float _colorOpacity;
+
+		private CustomComposite() {
+			_additive = false;
+			_color = new Color(0, 0, 0);
+			_colorOpacity = 0;
+		}
+
+		public void setProperties(boolean additive, Color color, float colorOpacity) {
+			_additive = additive;
+			_color = color;
+			_colorOpacity = colorOpacity;
+		}
+
+		@Override
+		public CompositeContext createContext(ColorModel srcColorModel, ColorModel dstColorModel, RenderingHints hints) {
+			return instance;
+		}
+
+		@Override
+		public void dispose() {
+		}
+
+		@Override
+		public void compose(Raster src, Raster dstIn, WritableRaster dstOut) {
+			int w = Math.min(src.getWidth(), dstIn.getWidth());
+			int h = Math.min(src.getHeight(), dstIn.getHeight());
+
+			int[] srcData = new int[w * src.getNumBands()];
+			int[] dstData = new int[w * src.getNumBands()];
+
+			for (int y = 0; y < h; ++y) {
+				src.getPixels(0, y, w, 1, srcData);
+				dstIn.getPixels(0, y, w, 1, dstData);
+
+				for (int x = 0; x < w; ++x) {
+					int as = srcData[x * 4 + 3];
+					int rs = srcData[x * 4];
+					int gs = srcData[x * 4 + 1];
+					int bs = srcData[x * 4 + 2];
+
+					int ad = dstData[x * 4 + 3];
+					int rd = dstData[x * 4];
+					int gd = dstData[x * 4 + 1];
+					int bd = dstData[x * 4 + 2];
+
+					rs = (int) Math.min((rs * (1 - _colorOpacity) + _color.r * _colorOpacity), 255);
+					gs = (int) Math.min((gs * (1 - _colorOpacity) + _color.g * _colorOpacity), 255);
+					bs = (int) Math.min((bs * (1 - _colorOpacity) + _color.b * _colorOpacity), 255);
+
+					float opacity = (float) as / 255.0f;
+
+					if (_additive) {
+						rd = (int) Math.min(rs * opacity + rd, 255);
+						gd = (int) Math.min(gs * opacity + gd, 255);
+						bd = (int) Math.min(bs * opacity + bd, 255);
+					} else {
+						rd = (int) (rs * opacity + rd * (1 - opacity));
+						gd = (int) (gs * opacity + gd * (1 - opacity));
+						bd = (int) (bs * opacity + bd * (1 - opacity));
+					}
+
+					dstData[x * 4] = rd;
+					dstData[x * 4 + 1] = gd;
+					dstData[x * 4 + 2] = bd;
+					dstData[x * 4 + 3] = ad;
+				}
+
+				dstOut.setPixels(0, y, w, 1, dstData);
+			}
+		}
+	}
+
+	public void setCustomComposite(boolean additive, Color color, float colorOpacity) {
+		CustomComposite.instance.setProperties(additive, color, colorOpacity);
+		_graphics.setComposite(CustomComposite.instance);
+	}
+
+	public void endCustomComposite() {
+		_graphics.setComposite(AlphaComposite.SrcOver);
 	}
 
 	public void drawText(String text, Color color, Font font, float x, float y) {

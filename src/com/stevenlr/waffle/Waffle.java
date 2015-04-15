@@ -40,7 +40,7 @@ public class Waffle implements Runnable {
 	private Waffle() {
 	}
 
-	public void setGame(IWaffleGame game) {
+	public void startGame(IWaffleGame game) {
 		if (_running) {
 			throw new RuntimeException("Can't set game after game has started");
 		}
@@ -56,6 +56,8 @@ public class Waffle implements Runnable {
 			_title = annotation.title();
 			_showFps = annotation.showFps();
 		}
+
+		start();
 	}
 
 	@Override

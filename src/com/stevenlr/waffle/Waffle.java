@@ -5,6 +5,7 @@
 
 package com.stevenlr.waffle;
 
+import java.applet.Applet;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -35,6 +36,8 @@ public class Waffle implements Runnable {
 	private int _pixelAspect = 1;
 	private String _title = "";
 	private boolean _showFps = false;
+	private boolean _running = false;
+	private Applet _applet;
 
 	private Waffle() {
 	}
@@ -72,29 +75,8 @@ public class Waffle implements Runnable {
 		_showFps = showFps;
 	}
 
-	public void startGame(IGame game) {
+	public void setGame(IGame game) {
 		_game = game;
-
-		_canvas = new Canvas(_viewportWidth / _pixelAspect, _viewportHeight / _pixelAspect);
-
-		JFrame frame = new JFrame(_title);
-		frame.setResizable(false);
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-		_viewport = new java.awt.Canvas();
-		_viewport.setPreferredSize(new Dimension(_viewportWidth, _viewportHeight));
-
-		frame.add(_viewport);
-		frame.pack();
-		frame.setVisible(true);
-
-		_viewport.createBufferStrategy(2);
-
-		InputHandler.registerHandlers(_viewport);
-		_viewport.requestFocus();
-
-		game.init();
-		new Thread(this).start();
 	}
 
 	@Override
@@ -108,7 +90,7 @@ public class Waffle implements Runnable {
 		float time = 0;
 		float frames = 0;
 
-		while (true) {
+		while (_running) {
 			currentTime = System.currentTimeMillis();
 			dt = (currentTime - previousTime) / 1000.0f;
 			previousTime = currentTime;
@@ -154,5 +136,43 @@ public class Waffle implements Runnable {
 				}
 			}
 		}
+	}
+
+	public void start() {
+		_running = true;
+		_canvas = new Canvas(_viewportWidth / _pixelAspect, _viewportHeight / _pixelAspect);
+		_viewport = new java.awt.Canvas();
+		_viewport.setPreferredSize(new Dimension(_viewportWidth, _viewportHeight));
+
+		if (_applet == null) {
+			JFrame frame = new JFrame(_title);
+			frame.setResizable(false);
+			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			frame.setIgnoreRepaint(true);
+
+			frame.add(_viewport);
+			frame.pack();
+			frame.setVisible(true);
+		} else {
+			_applet.setIgnoreRepaint(true);
+			_applet.add(_viewport);
+		}
+
+		_viewport.createBufferStrategy(2);
+
+		InputHandler.registerHandlers(_viewport);
+		_viewport.requestFocus();
+
+		_game.initGame();
+
+		new Thread(this).start();
+	}
+
+	public void stop() {
+		_running = false;
+	}
+
+	public void setApplet(Applet applet) {
+		_applet = applet;
 	}
 }

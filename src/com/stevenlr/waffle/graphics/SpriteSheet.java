@@ -92,6 +92,12 @@ public class SpriteSheet {
 	}
 
 	public Region getRegion(int tileX, int tileY, int numTilesX, int numTilesY) {
+		if (tileX < 0 || tileX >= _numTilesX
+				|| tileY < 0 || tileY >= _numTilesY
+				|| tileX + numTilesX - 1 < 0 || tileX + numTilesX - 1 >= _numTilesX
+				|| tileY + numTilesY - 1 < 0 || tileY + numTilesY - 1 >= _numTilesY) {
+			throw new RuntimeException("Out-of-bounds spritesheet region");
+		}
 		return new Region(this, tileX, tileY, numTilesX, numTilesY);
 	}
 

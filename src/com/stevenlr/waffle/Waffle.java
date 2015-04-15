@@ -5,7 +5,6 @@
 
 package com.stevenlr.waffle;
 
-import java.applet.Applet;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -37,13 +36,12 @@ public class Waffle implements Runnable {
 	private String _title = "";
 	private boolean _showFps = false;
 	private boolean _running = false;
-	private Applet _applet;
 
 	private Waffle() {
 	}
 
 	public void setViewportSize(int width, int height) {
-		if (_game != null) {
+		if (_running) {
 			throw new RuntimeException("Can't set viewport size after game has started");
 		}
 
@@ -52,7 +50,7 @@ public class Waffle implements Runnable {
 	}
 
 	public void setPixelAspect(int pixelAspect) {
-		if (_game != null) {
+		if (_running) {
 			throw new RuntimeException("Can't set pixel aspect after game has started");
 		}
 
@@ -60,7 +58,7 @@ public class Waffle implements Runnable {
 	}
 
 	public void setTitle(String title) {
-		if (_game != null) {
+		if (_running) {
 			throw new RuntimeException("Can't set title after game has started");
 		}
 
@@ -68,7 +66,7 @@ public class Waffle implements Runnable {
 	}
 
 	public void setShowFps(boolean showFps) {
-		if (_game != null) {
+		if (_running) {
 			throw new RuntimeException("Can't set show fps option after game has started");
 		}
 
@@ -76,6 +74,10 @@ public class Waffle implements Runnable {
 	}
 
 	public void setGame(IGame game) {
+		if (_running) {
+			throw new RuntimeException("Can't set game after game has started");
+		}
+
 		_game = game;
 	}
 
@@ -139,40 +141,35 @@ public class Waffle implements Runnable {
 	}
 
 	public void start() {
+		if (_game == null) {
+			throw new RuntimeException("No game has been set");
+		}
+
 		_running = true;
 		_canvas = new Canvas(_viewportWidth / _pixelAspect, _viewportHeight / _pixelAspect);
 		_viewport = new java.awt.Canvas();
 		_viewport.setPreferredSize(new Dimension(_viewportWidth, _viewportHeight));
 
-		if (_applet == null) {
-			JFrame frame = new JFrame(_title);
-			frame.setResizable(false);
-			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			frame.setIgnoreRepaint(true);
+		JFrame frame = new JFrame(_title);
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setIgnoreRepaint(true);
 
-			frame.add(_viewport);
-			frame.pack();
-			frame.setVisible(true);
-		} else {
-			_applet.setIgnoreRepaint(true);
-			_applet.add(_viewport);
-		}
+		frame.add(_viewport);
+		frame.pack();
+		frame.setVisible(true);
 
 		_viewport.createBufferStrategy(2);
 
 		InputHandler.registerHandlers(_viewport);
 		_viewport.requestFocus();
 
-		_game.initGame();
+		_game.init();
 
 		new Thread(this).start();
 	}
 
 	public void stop() {
 		_running = false;
-	}
-
-	public void setApplet(Applet applet) {
-		_applet = applet;
 	}
 }

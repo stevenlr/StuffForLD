@@ -40,45 +40,22 @@ public class Waffle implements Runnable {
 	private Waffle() {
 	}
 
-	public void setViewportSize(int width, int height) {
-		if (_running) {
-			throw new RuntimeException("Can't set viewport size after game has started");
-		}
-
-		_viewportWidth = width;
-		_viewportHeight = height;
-	}
-
-	public void setPixelAspect(int pixelAspect) {
-		if (_running) {
-			throw new RuntimeException("Can't set pixel aspect after game has started");
-		}
-
-		_pixelAspect = pixelAspect;
-	}
-
-	public void setTitle(String title) {
-		if (_running) {
-			throw new RuntimeException("Can't set title after game has started");
-		}
-
-		_title = title;
-	}
-
-	public void setShowFps(boolean showFps) {
-		if (_running) {
-			throw new RuntimeException("Can't set show fps option after game has started");
-		}
-
-		_showFps = showFps;
-	}
-
 	public void setGame(IWaffleGame game) {
 		if (_running) {
 			throw new RuntimeException("Can't set game after game has started");
 		}
 
 		_game = game;
+
+		WaffleGame annotation = game.getClass().getAnnotation(WaffleGame.class);
+
+		if (annotation != null) {
+			_viewportWidth = annotation.viewportWidth();
+			_viewportHeight = annotation.viewportHeight();
+			_pixelAspect = annotation.pixelAspect();
+			_title = annotation.title();
+			_showFps = annotation.showFps();
+		}
 	}
 
 	@Override

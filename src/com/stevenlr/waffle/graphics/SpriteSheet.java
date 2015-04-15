@@ -53,7 +53,7 @@ public class SpriteSheet {
 		public void blitOn(Graphics2D graphics, int x, int y, int width, int height) {
 			graphics.drawImage(_spritesheet._image,
 					x, y,
-					width, height,
+					x + width, y + height,
 					_x, _y,
 					_x + _width, _y + _height,
 					null

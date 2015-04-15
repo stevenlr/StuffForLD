@@ -20,6 +20,7 @@ public class Renderer {
 	private Deque<AffineTransform> _transformStack = new LinkedList<AffineTransform>();
 	private boolean _isDirty = true;
 	private int[] _raster;
+	private Blitter _blitter = new Blitter();
 
 	public Renderer(Graphics2D graphics, int[] raster) {
 		_graphics = graphics;
@@ -92,46 +93,72 @@ public class Renderer {
 		_graphics.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
 	}
 
-	public void blit(IBlittable blittable) {
-		blit(blittable, 0, 0, blittable.getWidth(), blittable.getHeight());
+	public class Blitter {
+
+		private float _x;
+		private float _y;
+		private float _width;
+		private float _height;
+		private IBlittable _blittable;
+
+		private Blitter() {
+		}
+
+		private void begin(IBlittable blittable, float x, float y, float width, float height) {
+			_blittable = blittable;
+			_x = x;
+			_y = y;
+			_width = width;
+			_height = height;
+		}
+
+		public Blitter mirrorX() {
+			_x = _x + _width;
+			_width = -_width;
+
+			return this;
+		}
+
+		public Blitter mirrorY() {
+			_y = _y + _height;
+			_height = -_height;
+
+			return this;
+		}
+
+		public Blitter center() {
+			_x = _x - Math.abs(_width) / 2;
+			_y = _y - Math.abs(_height) / 2;
+
+			return this;
+		}
+
+		public void blit() {
+			_blittable.blitOn(_graphics, (int) _x, (int) _y, (int) _width, (int) _height);
+		}
 	}
 
-	public void blit(IBlittable blittable, float scale) {
-		blit(blittable, 0, 0, (int) (blittable.getWidth() * scale), (int) (blittable.getHeight() * scale));
+	public Blitter beginBlit(IBlittable blittable) {
+		return beginBlit(blittable, 0, 0, blittable.getWidth(), blittable.getHeight());
 	}
 
-	public void blit(IBlittable blittable, float x, float y) {
-		blit(blittable, x, y, blittable.getWidth(), blittable.getHeight());
+	public Blitter beginBlit(IBlittable blittable, float scale) {
+		return beginBlit(blittable, 0, 0, blittable.getWidth() * scale, blittable.getHeight() * scale);
 	}
 
-	public void blit(IBlittable blittable, float x, float y, float scale) {
-		blit(blittable, x, y, (int) (blittable.getWidth() * scale), (int) (blittable.getHeight() * scale));
+	public Blitter beginBlit(IBlittable blittable, float x, float y) {
+		return beginBlit(blittable, x, y, blittable.getWidth(), blittable.getHeight());
 	}
 
-	public void blit(IBlittable blittable, float x, float y, float width, float height) {
+	public Blitter beginBlit(IBlittable blittable, float x, float y, float scale) {
+		return beginBlit(blittable, x, y, blittable.getWidth() * scale, blittable.getHeight() * scale);
+	}
+
+	public Blitter beginBlit(IBlittable blittable, float x, float y, float width, float height) {
 		applyTransform();
-		blittable.blitOn(_graphics, (int) x, (int) y, (int) width, (int) height);
-	}
+		_blitter.begin(blittable, x, y, width, height);
 
-	public void blitCenter(IBlittable blittable) {
-		blitCenter(blittable, 0, 0, blittable.getWidth(), blittable.getHeight());
-	}
-
-	public void blitCenter(IBlittable blittable, float scale) {
-		blitCenter(blittable, 0, 0, (int) (blittable.getWidth() * scale), (int) (blittable.getHeight() * scale));
-	}
-
-	public void blitCenter(IBlittable blittable, float x, float y) {
-		blitCenter(blittable, x, y, blittable.getWidth(), blittable.getHeight());
-	}
-
-	public void blitCenter(IBlittable blittable, float x, float y, float scale) {
-		blitCenter(blittable, x, y, (int) (blittable.getWidth() * scale), (int) (blittable.getHeight() * scale));
-	}
-
-	public void blitCenter(IBlittable blittable, float x, float y, float width, float height) {
-		applyTransform();
-		blittable.blitOn(_graphics, (int) (x - width / 2), (int) (y - height / 2), (int) width, (int) height);
+		return _blitter;
 	}
 
 	public void drawText(String text, Color color, Font font, float x, float y) {

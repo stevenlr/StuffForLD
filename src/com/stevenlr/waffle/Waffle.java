@@ -26,7 +26,7 @@ public class Waffle implements Runnable {
 	public static EntitySystem entitySystem = EntitySystem.instance;
 	public static SoundsManager sounds = SoundsManager.instance;
 
-	private static IGame _game;
+	private static IWaffleGame _game;
 	private Canvas _canvas;
 	private java.awt.Canvas _viewport;
 
@@ -73,7 +73,7 @@ public class Waffle implements Runnable {
 		_showFps = showFps;
 	}
 
-	public void setGame(IGame game) {
+	public void setGame(IWaffleGame game) {
 		if (_running) {
 			throw new RuntimeException("Can't set game after game has started");
 		}

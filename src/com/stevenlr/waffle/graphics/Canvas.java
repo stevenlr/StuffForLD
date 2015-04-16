@@ -6,6 +6,8 @@
 package com.stevenlr.waffle.graphics;
 
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
@@ -19,8 +21,10 @@ public class Canvas implements IBlittable {
 	public Canvas(int width, int height) {
 		_width = width;
 		_height = height;
-		_image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		_renderer = new Renderer(_image.createGraphics(), getRaster());
+		_image = GraphicsEnvironment.getLocalGraphicsEnvironment()
+				.getDefaultScreenDevice().getDefaultConfiguration()
+				.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
+		_renderer = new Renderer((Graphics2D) _image.createGraphics(), getRaster());
 	}
 
 	public int[] getRaster() {

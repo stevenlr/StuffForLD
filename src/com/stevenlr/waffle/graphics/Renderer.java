@@ -202,23 +202,34 @@ public class Renderer {
 			int w = Math.min(src.getWidth(), dstIn.getWidth());
 			int h = Math.min(src.getHeight(), dstIn.getHeight());
 
-			int[] srcData = new int[w * src.getNumBands()];
-			int[] dstData = new int[w * src.getNumBands()];
+			int numBandSrc = src.getNumBands();
+			int numBandDst = dstIn.getNumBands();
+
+			int[] srcData = new int[w * numBandSrc];
+			int[] dstData = new int[w * numBandDst];
 
 			for (int y = 0; y < h; ++y) {
 				src.getPixels(0, y, w, 1, srcData);
 				dstIn.getPixels(0, y, w, 1, dstData);
 
 				for (int x = 0; x < w; ++x) {
-					int as = srcData[x * 4 + 3];
-					int rs = srcData[x * 4];
-					int gs = srcData[x * 4 + 1];
-					int bs = srcData[x * 4 + 2];
+					int as = 255;
+					int rs = srcData[x * numBandSrc];
+					int gs = srcData[x * numBandSrc + 1];
+					int bs = srcData[x * numBandSrc + 2];
 
-					int ad = dstData[x * 4 + 3];
-					int rd = dstData[x * 4];
-					int gd = dstData[x * 4 + 1];
-					int bd = dstData[x * 4 + 2];
+					if (numBandSrc == 4) {
+						as = srcData[x * numBandSrc + 3];
+					}
+
+					int ad = 255;
+					int rd = dstData[x * numBandDst];
+					int gd = dstData[x * numBandDst + 1];
+					int bd = dstData[x * numBandDst + 2];
+
+					if (numBandDst == 4) {
+						ad = dstData[x * numBandDst + 3];
+					}
 
 					rs = (int) Math.min((rs * (1 - _colorOpacity) + _color.r * _colorOpacity), 255);
 					gs = (int) Math.min((gs * (1 - _colorOpacity) + _color.g * _colorOpacity), 255);
@@ -236,10 +247,13 @@ public class Renderer {
 						bd = (int) (bs * opacity + bd * (1 - opacity));
 					}
 
-					dstData[x * 4] = rd;
-					dstData[x * 4 + 1] = gd;
-					dstData[x * 4 + 2] = bd;
-					dstData[x * 4 + 3] = ad;
+					dstData[x * numBandDst] = rd;
+					dstData[x * numBandDst + 1] = gd;
+					dstData[x * numBandDst + 2] = bd;
+
+					if (numBandDst == 4) {
+						dstData[x * numBandDst + 3] = ad;
+					}
 				}
 
 				dstOut.setPixels(0, y, w, 1, dstData);

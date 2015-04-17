@@ -5,7 +5,7 @@
 
 package com.stevenlr.waffle.graphics;
 
-public class Color {
+public class Color implements Cloneable {
 
 	public static final Color Black = new Color(0, 0, 0);
 	public static final Color White = new Color(255, 255, 255);
@@ -52,6 +52,12 @@ public class Color {
 		this.b = b;
 	}
 
+	public Color(Color c) {
+		r = c.r;
+		g = c.g;
+		b = c.b;
+	}
+
 	public java.awt.Color toAwtColor() {
 		return new java.awt.Color(r, g, b);
 	}
@@ -62,5 +68,10 @@ public class Color {
 
 	public int toInt() {
 		return (r << 16) | (g << 8) | b;
+	}
+
+	@Override
+	public Color clone() {
+		return new Color(this);
 	}
 }

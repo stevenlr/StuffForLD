@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 
 public interface IBlittable {
 
-	public int getWidth();
-	public int getHeight();
-	public void blitOn(Graphics2D graphics, int x, int y, int width, int height);
+	int getWidth();
+	int getHeight();
+	void blitOn(Graphics2D graphics, int x, int y, int width, int height);
 }

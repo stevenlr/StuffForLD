@@ -11,7 +11,7 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
-public class Canvas implements IBlittable {
+public class Canvas implements IBlittable, IBlittableFactory {
 
 	private int _width;
 	private int _height;
@@ -52,5 +52,10 @@ public class Canvas implements IBlittable {
 
 	public BufferedImage getImage() {
 		return _image;
+	}
+
+	@Override
+	public IBlittable getBlittable() {
+		return this;
 	}
 }

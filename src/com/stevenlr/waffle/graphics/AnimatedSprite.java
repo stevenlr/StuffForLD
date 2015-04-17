@@ -11,7 +11,7 @@ import java.util.List;
 
 import com.stevenlr.waffle.IUpdatable;
 
-public class AnimatedSprite {
+public class AnimatedSprite implements IBlittableFactory {
 
 	private SpriteSheet _spritesheet;
 	private List<Frame> _frames = new ArrayList<Frame>();
@@ -75,15 +75,16 @@ public class AnimatedSprite {
 		_spritesheet = new SpriteSheet(filename, tileWidth, tileHeight);
 	}
 
-	public Instance getInstance() {
-		return new Instance(this);
-	}
-
 	public void addFrame(float duration, int tile) {
 		addFrame(duration, tile % _spritesheet.getNumTilesX(), tile / _spritesheet.getNumTilesX());
 	}
 
 	public void addFrame(float duration, int tileX, int tileY) {
 		_frames.add(new Frame(duration, _spritesheet.getRegion(tileX, tileY)));
+	}
+
+	@Override
+	public IBlittable getBlittable() {
+		return new Instance(this);
 	}
 }

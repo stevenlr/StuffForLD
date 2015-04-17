@@ -33,7 +33,7 @@ public class SpriteSheet {
 		}
 	}
 
-	public class Region implements IBlittable {
+	public class Region implements IBlittable, IBlittableFactory {
 
 		private SpriteSheet _spritesheet;
 		private int _x;
@@ -68,6 +68,11 @@ public class SpriteSheet {
 		@Override
 		public int getHeight() {
 			return _height;
+		}
+
+		@Override
+		public IBlittable getBlittable() {
+			return this;
 		}
 	}
 

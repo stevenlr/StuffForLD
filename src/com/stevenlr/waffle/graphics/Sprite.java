@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 
 import com.stevenlr.waffle.Waffle;
 
-public class Sprite implements IBlittable {
+public class Sprite implements IBlittable, IBlittableFactory {
 
 	private BufferedImage _image;
 
@@ -38,5 +38,10 @@ public class Sprite implements IBlittable {
 	@Override
 	public void blitOn(Graphics2D graphics, int x, int y, int width, int height) {
 		graphics.drawImage(_image, x, y, width, height, null);
+	}
+
+	@Override
+	public IBlittable getBlittable() {
+		return this;
 	}
 }

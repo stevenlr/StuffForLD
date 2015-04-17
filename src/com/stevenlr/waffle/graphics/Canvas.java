@@ -24,7 +24,7 @@ public class Canvas implements IBlittable {
 		_image = GraphicsEnvironment.getLocalGraphicsEnvironment()
 				.getDefaultScreenDevice().getDefaultConfiguration()
 				.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
-		_renderer = new Renderer((Graphics2D) _image.createGraphics(), getRaster());
+		_renderer = new Renderer(_image.createGraphics(), getRaster());
 	}
 
 	public int[] getRaster() {

@@ -9,12 +9,14 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.stevenlr.waffle.IUpdatable;
+
 public class AnimatedSprite {
 
 	private SpriteSheet _spritesheet;
 	private List<Frame> _frames = new ArrayList<Frame>();
 
-	public class Instance implements IBlittable {
+	public class Instance implements IBlittable, IUpdatable {
 
 		private AnimatedSprite _sprite;
 		private int _currentFrame = 0;
@@ -24,6 +26,7 @@ public class AnimatedSprite {
 			_sprite = sprite;
 		}
 
+		@Override
 		public void update(float dt) {
 			if (dt * _time < 0) {
 				_time = -_time;

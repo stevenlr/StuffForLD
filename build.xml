@@ -8,7 +8,7 @@
 	<target name="build">
 		<ant target="clean" />
 		<mkdir dir="${build}" />
-		<javac srcdir="${src}" destdir="${build}" includes="com/stevenlr/waffle/**" target="1.7" />
+		<javac srcdir="${src}" destdir="${build}" includes="com/stevenlr/waffle/**" target="1.7" source="1.7" />
 	</target>
 
 	<target name="dist" depends="build">

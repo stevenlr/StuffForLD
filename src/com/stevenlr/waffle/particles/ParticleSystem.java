@@ -5,10 +5,15 @@
 
 package com.stevenlr.waffle.particles;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import com.stevenlr.waffle.IUpdatable;
 import com.stevenlr.waffle.graphics.Color;
 import com.stevenlr.waffle.graphics.IBlittableFactory;
 import com.stevenlr.waffle.graphics.Renderer;
+import com.stevenlr.waffle.particles.spawner.ParticleSpawner;
 
 public class ParticleSystem implements IUpdatable {
 
@@ -23,6 +28,7 @@ public class ParticleSystem implements IUpdatable {
 	private Particle[] _particles;
 	private boolean _renderAdditive = false;
 	private boolean _isUpdatable;
+	private List<ParticleSpawner> _spawners = new LinkedList<ParticleSpawner>();
 
 	public ParticleSystem(IBlittableFactory blittableFactory, int maxParticles) {
 		_blittableFactory = blittableFactory;
@@ -63,6 +69,22 @@ public class ParticleSystem implements IUpdatable {
 
 	@Override
 	public void update(float dt) {
+		Iterator<ParticleSpawner> it = _spawners.iterator();
+
+		while (it.hasNext()) {
+			ParticleSpawner spawner = it.next();
+
+			spawner.update(dt);
+
+			while (spawner.canSpawnParticle()) {
+				spawner.spawnParticle();
+			}
+
+			if (spawner.isDoneSpawning()) {
+				it.remove();
+			}
+		}
+
 		for (int i = _circularBufferBottom; i != _circularBufferTop; i = (i + 1) % _maxParticles) {
 			Particle p = _particles[i];
 			boolean _isDead = false;
@@ -106,5 +128,10 @@ public class ParticleSystem implements IUpdatable {
 		if (_renderAdditive) {
 			r.endCustomComposite();
 		}
+	}
+
+	public void addSpawner(ParticleSpawner spawner) {
+		spawner.setParticleSystem(this);
+		_spawners.add(spawner);
 	}
 }

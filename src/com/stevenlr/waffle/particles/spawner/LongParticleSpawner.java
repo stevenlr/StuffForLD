@@ -38,7 +38,9 @@ public class LongParticleSpawner extends ParticleSpawner {
 			throw new RuntimeException("No particle system specified");
 		}
 
+		_numSpawned++;
 		_timeSinceLastSpawned = 0;
+
 		return _system.addParticle();
 	}
 

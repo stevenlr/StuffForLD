@@ -41,6 +41,8 @@ public class OnceParticleSpawner extends ParticleSpawner {
 			throw new RuntimeException("No particle system specified");
 		}
 
+		_numSpawned++;
+
 		return _system.addParticle();
 	}
 

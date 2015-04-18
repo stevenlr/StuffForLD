@@ -7,6 +7,7 @@ package com.stevenlr.waffle.entitysystem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -92,10 +93,18 @@ public class EntitySystem {
 		for (Class<? extends Component> componentType : componentTypes) {
 			Map<Entity, Component> componentStore = _components.get(componentType);
 
-			for (int i = 0; i < entities.size(); ++i) {
-				if (!componentStore.containsKey(entities.get(i))) {
-					entities.remove(entities.get(i));
-					--i;
+			if (componentStore == null) {
+				entities.clear();
+				break;
+			}
+
+			Iterator<Entity> it = entities.iterator();
+
+			while (it.hasNext()) {
+				Entity e = it.next();
+
+				if (!componentStore.containsKey(e)) {
+					it.remove();
 				}
 			}
 		}

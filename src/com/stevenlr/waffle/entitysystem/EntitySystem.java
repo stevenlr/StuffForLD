@@ -31,6 +31,11 @@ public class EntitySystem {
 		return _nextId++;
 	}
 
+	public void clearAll() {
+		_entities.clear();
+		_components.clear();
+	}
+
 	public void registerEntity(Entity entity) {
 		entity.id = getNextAvailableId();
 		_entities.put(entity.id, entity);
@@ -80,7 +85,10 @@ public class EntitySystem {
 
 	public void removeComponent(Entity entity, Class<? extends Component> componentType) {
 		Map<Entity, Component> componentStore = _components.get(componentType);
-		componentStore.remove(entity);
+
+		if (componentStore != null) {
+			componentStore.remove(entity);
+		}
 	}
 
 	public List<Entity> getEntitiesWithComponents(Class<? extends Component>... componentTypes) {

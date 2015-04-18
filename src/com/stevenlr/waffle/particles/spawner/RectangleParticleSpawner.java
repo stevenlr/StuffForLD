@@ -27,24 +27,6 @@ public class RectangleParticleSpawner extends ParticleSpawner {
 	}
 
 	@Override
-	public boolean canSpawnParticle() {
-		if (_subSpawner != null) {
-			return _subSpawner.canSpawnParticle();
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isDoneSpawning() {
-		if (_subSpawner != null) {
-			return _subSpawner.isDoneSpawning();
-		}
-
-		return true;
-	}
-
-	@Override
 	public Particle spawnParticle() {
 		if (_subSpawner != null) {
 			Particle p = _subSpawner.spawnParticle();
@@ -59,12 +41,5 @@ public class RectangleParticleSpawner extends ParticleSpawner {
 		}
 
 		return null;
-	}
-
-	@Override
-	public void update(float dt) {
-		if (_subSpawner != null) {
-			_subSpawner.update(dt);
-		}
 	}
 }

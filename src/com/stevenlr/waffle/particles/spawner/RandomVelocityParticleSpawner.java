@@ -17,7 +17,7 @@ public class RandomVelocityParticleSpawner extends ParticleSpawner {
 	private float _deviation;
 	private float _angle;
 
-	protected RandomVelocityParticleSpawner(float minVelocity, float maxVelocity, float dx, float dy, float deviation, ParticleSpawner subSpawner) {
+	public RandomVelocityParticleSpawner(float minVelocity, float maxVelocity, float dx, float dy, float deviation, ParticleSpawner subSpawner) {
 		super(subSpawner);
 		_minVelocity = minVelocity;
 		_maxVelocity = maxVelocity;
@@ -25,7 +25,7 @@ public class RandomVelocityParticleSpawner extends ParticleSpawner {
 		_deviation = deviation;
 	}
 
-	protected RandomVelocityParticleSpawner(float minVelocity, float maxVelocity, ParticleSpawner subSpawner) {
+	public RandomVelocityParticleSpawner(float minVelocity, float maxVelocity, ParticleSpawner subSpawner) {
 		super(subSpawner);
 		_minVelocity = minVelocity;
 		_maxVelocity = maxVelocity;

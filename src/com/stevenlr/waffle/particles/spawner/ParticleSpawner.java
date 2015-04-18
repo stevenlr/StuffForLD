@@ -11,7 +11,7 @@ public abstract class ParticleSpawner implements IUpdatable, IParticleSpawnerDec
 
 	protected ParticleSpawner _subSpawner;
 
-	protected ParticleSpawner(ParticleSpawner subSpawner) {
+	public ParticleSpawner(ParticleSpawner subSpawner) {
 		_subSpawner = subSpawner;
 	}
 

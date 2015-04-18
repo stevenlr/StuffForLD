@@ -14,7 +14,7 @@ public class ContinuousParticleSpawner extends ParticleSpawner {
 	private ParticleSystem _system;
 	private float _timeSinceLastSpawn = 0;
 
-	protected ContinuousParticleSpawner(float delay, ParticleSystem system) {
+	public ContinuousParticleSpawner(float delay, ParticleSystem system) {
 		super(null);
 		_delay = delay;
 		_system = system;

@@ -12,7 +12,7 @@ public class FixedVelocityParticleSpawner extends ParticleSpawner {
 	private float _dx;
 	private float _dy;
 
-	protected FixedVelocityParticleSpawner(float dx, float dy, ParticleSpawner subSpawner) {
+	public FixedVelocityParticleSpawner(float dx, float dy, ParticleSpawner subSpawner) {
 		super(subSpawner);
 		_dx = dx;
 		_dy = dy;

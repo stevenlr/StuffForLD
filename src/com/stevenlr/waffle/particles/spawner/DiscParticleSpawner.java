@@ -17,7 +17,7 @@ public class DiscParticleSpawner extends ParticleSpawner {
 	private float _y;
 	private float _radius;
 
-	protected DiscParticleSpawner(float x, float y, float radius, ParticleSpawner subSpawner) {
+	public DiscParticleSpawner(float x, float y, float radius, ParticleSpawner subSpawner) {
 		super(subSpawner);
 		_radius = radius;
 		_x = x;

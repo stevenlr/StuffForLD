@@ -18,7 +18,7 @@ public class RectangleParticleSpawner extends ParticleSpawner {
 	private float _x2;
 	private float _y2;
 
-	protected RectangleParticleSpawner(float x1, float y1, float x2, float y2, ParticleSpawner subSpawner) {
+	public RectangleParticleSpawner(float x1, float y1, float x2, float y2, ParticleSpawner subSpawner) {
 		super(subSpawner);
 		_x1 = x1;
 		_y1 = y1;

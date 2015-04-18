@@ -12,7 +12,7 @@ public class PointParticleSpawner extends ParticleSpawner {
 	private float _x;
 	private float _y;
 
-	protected PointParticleSpawner(float x, float y, ParticleSpawner subSpawner) {
+	public PointParticleSpawner(float x, float y, ParticleSpawner subSpawner) {
 		super(subSpawner);
 		_x = x;
 		_y = y;

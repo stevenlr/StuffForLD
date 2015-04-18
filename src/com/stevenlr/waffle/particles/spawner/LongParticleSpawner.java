@@ -16,7 +16,7 @@ public class LongParticleSpawner extends ParticleSpawner {
 	private float _timeSinceLastSpawned = 0;
 	private int _numSpawned = 0;
 
-	protected LongParticleSpawner(int numToSpawn, float duration, ParticleSystem system) {
+	public LongParticleSpawner(int numToSpawn, float duration, ParticleSystem system) {
 		super(null);
 		_numToSpawn = numToSpawn;
 		_delay = duration / numToSpawn;

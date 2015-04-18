@@ -15,7 +15,7 @@ public class OnceParticleSpawner extends ParticleSpawner {
 	private ParticleSystem _system;
 	private int _numSpawned = 0;
 
-	private OnceParticleSpawner(int numToSpawn, float delay, ParticleSystem system) {
+	public OnceParticleSpawner(int numToSpawn, float delay, ParticleSystem system) {
 		super(null);
 		_numToSpawn = numToSpawn;
 		_system = system;

@@ -14,10 +14,9 @@ public class ContinuousParticleSpawner extends ParticleSpawner {
 	private ParticleSystem _system;
 	private float _timeSinceLastSpawn = 0;
 
-	public ContinuousParticleSpawner(float delay, ParticleSystem system) {
+	public ContinuousParticleSpawner(float delay) {
 		super(null);
 		_delay = delay;
-		_system = system;
 	}
 
 	@Override
@@ -32,6 +31,10 @@ public class ContinuousParticleSpawner extends ParticleSpawner {
 
 	@Override
 	public Particle spawnParticle() {
+		if (_system == null) {
+			throw new RuntimeException("No particle system specified");
+		}
+
 		_timeSinceLastSpawn = 0;
 		return _system.addParticle();
 	}
@@ -39,5 +42,10 @@ public class ContinuousParticleSpawner extends ParticleSpawner {
 	@Override
 	public void update(float dt) {
 		_timeSinceLastSpawn += dt;
+	}
+
+	@Override
+	public void setParticleSystem(ParticleSystem system) {
+		_system = system;
 	}
 }

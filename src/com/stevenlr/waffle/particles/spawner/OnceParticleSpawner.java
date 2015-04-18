@@ -15,10 +15,9 @@ public class OnceParticleSpawner extends ParticleSpawner {
 	private ParticleSystem _system;
 	private int _numSpawned = 0;
 
-	public OnceParticleSpawner(int numToSpawn, float delay, ParticleSystem system) {
+	public OnceParticleSpawner(int numToSpawn, float delay) {
 		super(null);
 		_numToSpawn = numToSpawn;
-		_system = system;
 	}
 
 	@Override
@@ -38,6 +37,15 @@ public class OnceParticleSpawner extends ParticleSpawner {
 
 	@Override
 	public Particle spawnParticle() {
+		if (_system == null) {
+			throw new RuntimeException("No particle system specified");
+		}
+
 		return _system.addParticle();
+	}
+
+	@Override
+	public void setParticleSystem(ParticleSystem system) {
+		_system = system;
 	}
 }

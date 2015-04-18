@@ -16,11 +16,10 @@ public class LongParticleSpawner extends ParticleSpawner {
 	private float _timeSinceLastSpawned = 0;
 	private int _numSpawned = 0;
 
-	public LongParticleSpawner(int numToSpawn, float duration, ParticleSystem system) {
+	public LongParticleSpawner(int numToSpawn, float duration) {
 		super(null);
 		_numToSpawn = numToSpawn;
 		_delay = duration / numToSpawn;
-		_system = system;
 	}
 
 	@Override
@@ -35,6 +34,10 @@ public class LongParticleSpawner extends ParticleSpawner {
 
 	@Override
 	public Particle spawnParticle() {
+		if (_system == null) {
+			throw new RuntimeException("No particle system specified");
+		}
+
 		_timeSinceLastSpawned = 0;
 		return _system.addParticle();
 	}
@@ -42,5 +45,10 @@ public class LongParticleSpawner extends ParticleSpawner {
 	@Override
 	public void update(float dt) {
 		_timeSinceLastSpawned += dt;
+	}
+
+	@Override
+	public void setParticleSystem(ParticleSystem system) {
+		_system = system;
 	}
 }

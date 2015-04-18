@@ -6,10 +6,12 @@
 package com.stevenlr.waffle.particles.spawner;
 
 import com.stevenlr.waffle.particles.Particle;
+import com.stevenlr.waffle.particles.ParticleSystem;
 
 public interface IParticleSpawnerDecorator {
 
 	boolean canSpawnParticle();
 	boolean isDoneSpawning();
 	Particle spawnParticle();
+	void setParticleSystem(ParticleSystem system);
 }

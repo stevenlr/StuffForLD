@@ -6,6 +6,7 @@
 package com.stevenlr.waffle.particles.spawner;
 
 import com.stevenlr.waffle.IUpdatable;
+import com.stevenlr.waffle.particles.ParticleSystem;
 
 public abstract class ParticleSpawner implements IUpdatable, IParticleSpawnerDecorator {
 
@@ -37,6 +38,13 @@ public abstract class ParticleSpawner implements IUpdatable, IParticleSpawnerDec
 	public void update(float dt) {
 		if (_subSpawner != null) {
 			_subSpawner.update(dt);
+		}
+	}
+
+	@Override
+	public void setParticleSystem(ParticleSystem system) {
+		if (_subSpawner != null) {
+			_subSpawner.setParticleSystem(system);
 		}
 	}
 }

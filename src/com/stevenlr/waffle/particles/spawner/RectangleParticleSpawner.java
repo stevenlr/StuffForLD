@@ -31,8 +31,8 @@ public class RectangleParticleSpawner extends ParticleSpawner {
 		if (_subSpawner != null) {
 			Particle p = _subSpawner.spawnParticle();
 
-			float x = (rand.nextFloat() - 0.5f * 2);
-			float y = (rand.nextFloat() - 0.5f * 2);
+			float x = (rand.nextFloat() - 0.5f) * 2;
+			float y = (rand.nextFloat() - 0.5f) * 2;
 
 			p.x = _x1 + (_x2 - _x1) * x;
 			p.y = _y1 + (_y2 - _y1) * y;

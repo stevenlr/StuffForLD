@@ -7,6 +7,7 @@ package com.stevenlr.waffle;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -34,8 +35,17 @@ public class Waffle implements Runnable {
 	private String _title = "";
 	private boolean _showFps = false;
 	private boolean _running = false;
+	private Image _icon = null;
 
 	private Waffle() {
+	}
+
+	public void setWindowIcon(Image icon) {
+		if (_running) {
+			throw new RuntimeException("Can't set window icon game has started");
+		}
+
+		_icon = icon;
 	}
 
 	public void startGame(IWaffleGame game) {
@@ -131,6 +141,10 @@ public class Waffle implements Runnable {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setIgnoreRepaint(true);
+
+		if (_icon != null) {
+			frame.setIconImage(_icon);
+		}
 
 		frame.add(_viewport);
 		frame.pack();
